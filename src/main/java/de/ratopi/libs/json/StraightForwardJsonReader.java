@@ -49,8 +49,6 @@ public class StraightForwardJsonReader implements JsonReader
 {
 	// ==== static members ====
 
-	// private static final Logger LOGGER = LoggerFactory.getLogger( StraightForwardJsonReader.class );
-
 	private static final int PUSHBACK_BUFFER_SIZE = 10;
 
 	// ==== private attributes ====
@@ -77,7 +75,7 @@ public class StraightForwardJsonReader implements JsonReader
 
 	// ==== interface JsonReader implementation ====
 
-	public Object readJson( Reader reader ) throws IOException
+	public Object readJson( final Reader reader ) throws IOException
 	{
 		final MyReader myReader = new MyReader( reader, errorLoggingContextSize );
 
@@ -126,7 +124,7 @@ public class StraightForwardJsonReader implements JsonReader
 		throw new RuntimeException( createErrorText( reader, "Syntax error at line " + reader.line + ", column " + reader.characterIndex + ". " + "Unexpected character \"" + Character.toString((char)ch) + "\"." ) );
 	}
 
-	private Object createObject( MyReader reader ) throws IOException
+	private Object createObject( final MyReader reader ) throws IOException
 	{
 		final HashMap<Object,Object> map = new HashMap<Object,Object>();
 
@@ -163,7 +161,7 @@ public class StraightForwardJsonReader implements JsonReader
 		return map;
 	}
 
-	private Object createList( MyReader reader ) throws IOException
+	private Object createList( final MyReader reader ) throws IOException
 	{
 		final ArrayList<Object> list = new ArrayList<Object>();
 
@@ -193,7 +191,7 @@ public class StraightForwardJsonReader implements JsonReader
 		return list;
 	}
 
-	private Object createString( MyReader reader, int limitChar ) throws IOException
+	private Object createString( final MyReader reader, final int limitChar ) throws IOException
 	{
 		final StringBuilder stringBuilder = new StringBuilder();
 
@@ -216,7 +214,7 @@ public class StraightForwardJsonReader implements JsonReader
 		return stringBuilder.toString();
 	}
 
-	private Object createToken( MyReader reader ) throws IOException
+	private Object createToken( final MyReader reader ) throws IOException
 	{
 		int ch = reader.read();
 
@@ -238,7 +236,7 @@ public class StraightForwardJsonReader implements JsonReader
 		return text;
 	}
 
-	protected Object createNumber( MyReader reader ) throws IOException
+	protected Object createNumber( final MyReader reader ) throws IOException
 	{
 		boolean isDouble = false;
 
@@ -263,7 +261,7 @@ public class StraightForwardJsonReader implements JsonReader
 		return Long.parseLong( stringBuilder.toString() );
 	}
 
-	protected boolean isNumberCharacter( int ch )
+	protected boolean isNumberCharacter( final int ch )
 	{
 		return
 			ch == '+' ||
@@ -283,7 +281,7 @@ public class StraightForwardJsonReader implements JsonReader
 			ch == '.';
 	}
 
-	private char escapedCharacter( int ch, MyReader reader ) throws IOException
+	private char escapedCharacter( final int ch, final MyReader reader ) throws IOException
 	{
 		switch ( ch )
 		{
@@ -391,7 +389,7 @@ public class StraightForwardJsonReader implements JsonReader
 		}
 
 		@Override
-		public void unread( int c ) throws IOException
+		public void unread( final int c ) throws IOException
 		{
 			characterIndex--;
 			super.unread( c );

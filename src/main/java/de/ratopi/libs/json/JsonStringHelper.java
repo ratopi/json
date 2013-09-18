@@ -91,7 +91,7 @@ public class JsonStringHelper
 	// ---
 
 	public Object parseJsonString( final String json )
-			throws IOException
+		throws IOException
 	{
 		final StringReader reader = new StringReader( json );
 
