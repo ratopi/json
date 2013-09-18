@@ -81,7 +81,6 @@ public class SimpleJsonWriter implements JsonWriter
 	 */
 	private boolean escapeNonAsciiCharacters = false;
 
-
 	private SimpleDateFormat simpleDateFormat;
 
 	// ==== private members ====
@@ -169,11 +168,11 @@ public class SimpleJsonWriter implements JsonWriter
 			{
 				booleanToJson( writer, (Boolean) bean );
 			}
-			else if ( bean instanceof Date)
+			else if ( bean instanceof Date )
 			{
 				dateToJson( writer, (Date) bean );
 			}
-			else if ( bean instanceof Enum)
+			else if ( bean instanceof Enum )
 			{
 				enumToJson( writer, (Enum) bean );
 			}
@@ -182,7 +181,7 @@ public class SimpleJsonWriter implements JsonWriter
 				beanToJson( writer, bean );
 			}
 		}
-		catch ( IOException e )
+		catch ( final IOException e )
 		{
 			throw new RuntimeException( e );
 		}
@@ -210,13 +209,10 @@ public class SimpleJsonWriter implements JsonWriter
 
 		while ( iterator.hasNext() )
 		{
-			Object o = iterator.next();
+			final Object o = iterator.next();
 			writeJson( o, writer );
 
-			if ( iterator.hasNext() )
-			{
-				writer.write( ',' );
-			}
+			if ( iterator.hasNext() ) writer.write( ',' );
 		}
 
 		writer.write( ']' );
@@ -228,13 +224,10 @@ public class SimpleJsonWriter implements JsonWriter
 
 		for ( int i = 0; i < array.length; i++ )
 		{
-			Object o = array[ i ];
-			writeJson( o, writer );
+			if ( i > 0 ) writer.write( ',' );
 
-			if ( i < array.length - 1 )
-			{
-				writer.write( ',' );
-			}
+			final Object o = array[ i ];
+			writeJson( o, writer );
 		}
 
 		writer.write( ']' );
@@ -258,12 +251,7 @@ public class SimpleJsonWriter implements JsonWriter
 
 			writer.write( ':' );
 
-			Object value = entry.getValue();
-			if ( value instanceof JsonSubstitutable )
-			{
-				value = ( (JsonSubstitutable) value ).giveJsonSubstitute();
-			}
-
+			final Object value = entry.getValue();
 			writeJson( value, writer );
 		}
 
